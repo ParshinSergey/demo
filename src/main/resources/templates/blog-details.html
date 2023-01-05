@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Блог сайта</title>
     <!--    <title>Getting Started: Serving Web Content</title>-->
@@ -11,10 +11,15 @@
 
 <div class="container mt-5">
     <h1>Блог сайта</h1>
-    <div th:each="el : ${posts}" class="alert alert-info mt-2">
+    <div th:with="el=${post}" class="alert alert-info mt-2">
         <h5 th:text="${el.title}"/>
         <p th:text="${el.anons}"/>
-        <a th:href="'blog/' + ${el.id}" class="btn btn-warning">Детальнее</a>
+        <p th:text="${el.full_text}"/>
+        <p>Просмотры: <span th:text="${el.views}"/></p>
+        <a th:href="'/blog/' + ${post.id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+        <form th:action="'/blog/' + ${post.id} + '/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Удалить</button>
+        </form>
     </div>
 </div>
 

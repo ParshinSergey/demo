@@ -7,14 +7,25 @@ import javax.persistence.Id;
 
 @Entity
 public class Post {
+    private static long counter = 1000L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title, anons, full_text;
 
     private int views;
+
+    public Post() {
+    }
+
+    public Post(String title, String anons, String full_text) {
+        this.id = ++counter;
+        this.title = title;
+        this.anons = anons;
+        this.full_text = full_text;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -52,7 +63,6 @@ public class Post {
         this.views = views;
     }
 
-    @Id
     public Long getId() {
         return id;
     }
