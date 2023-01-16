@@ -1,13 +1,12 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "post")
 public class Post {
-    private static long counter = 1000L;
+    //private static long counter = 1000L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,16 +14,27 @@ public class Post {
 
     private String title, anons, full_text;
 
+    private String author;
+
     private int views;
 
     public Post() {
     }
 
-    public Post(String title, String anons, String full_text) {
-        this.id = ++counter;
+    public Post(String title, String anons, String full_text, String author ) {
+        //this.id = ++counter;
         this.title = title;
         this.anons = anons;
         this.full_text = full_text;
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setId(Long id) {

@@ -31,9 +31,10 @@ public class BlogController {
 
     @PostMapping("/blog/add")
     public String blogPostAdd(@RequestParam String title,
-                          @RequestParam String anons,
-                          @RequestParam String full_text) {
-        Post post = new Post(title, anons, full_text);
+                              @RequestParam String anons,
+                              @RequestParam String full_text,
+                              @RequestParam String author) {
+        Post post = new Post(title, anons, full_text, author);
         postRepository.save(post);
         return "redirect:/blog";
     }
@@ -67,9 +68,10 @@ public class BlogController {
                              @RequestParam String title,
                              @RequestParam String anons,
                              @RequestParam String full_text,
+                             @RequestParam String author,
                              @RequestParam int views) {
 
-        Post post = new Post(title, anons, full_text);
+        Post post = new Post(title, anons, full_text, author);
         post.setId(id);
         post.setViews(views);
         postRepository.save(post);
