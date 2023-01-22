@@ -7,3 +7,12 @@ INSERT INTO users (email, name, password)
 VALUES ('user@mail.ru',  'Mike', 'password'),
        ('admin@mail.ru', 'Jonny Favorite', 'admin'),
        ('vasya@google.com', 'Вася', 'vasya');
+
+INSERT INTO USER_ROLES (ROLE, USER_ID)
+VALUES ('USER', 1),
+       ('ADMIN', 2),
+       ('USER', 2),
+       ('USER', 3);
+
+UPDATE users SET password = '$2y$10$GuLrinTubzS74UFaTSC1zutA/w6MMviTwwCr/7Lc/0Lx83QnLY9uS'
+WHERE id = 1;
