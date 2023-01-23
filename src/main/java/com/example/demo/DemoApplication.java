@@ -21,7 +21,7 @@ public class DemoApplication implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args)  {
         User user = userRepository.findById(1L).orElse(new User());
         System.out.println(user);
     }

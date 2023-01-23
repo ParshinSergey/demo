@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,8 @@ import java.util.Optional;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+    public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(12);
 
     private final UserRepository userRepository;
 
@@ -38,6 +41,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .and().httpBasic();
+                //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }
@@ -51,14 +55,9 @@ public class WebSecurityConfig {
         };
     }
 
-/*    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }*/
-
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder(12));
+        auth.userDetailsService(userDetailsService()).passwordEncoder(PASSWORD_ENCODER);
     }
 
 }

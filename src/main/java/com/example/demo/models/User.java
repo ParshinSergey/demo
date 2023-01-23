@@ -1,5 +1,9 @@
 package com.example.demo.models;
 
+import com.example.demo.util.PasswordDeserializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +19,8 @@ public class User {
 
     private String name;
 
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = PasswordDeserializer.class)
     private String password;
 
     @Enumerated(EnumType.STRING)
