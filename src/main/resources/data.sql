@@ -7,10 +7,10 @@ VALUES ('user@mail.ru',  'Mike', 'password'),
        ('admin@mail.ru', 'Jonny Favorite', 'admin'),
        ('vasya@google.com', 'Вася', 'vasya');
 
-INSERT INTO post (title, author, anons, full_text, views, user_id)
-VALUES ('1st Article',  'Mike', 'New Year', 'Happy New Year!', 0, 1),
-       ('2nd Article', 'Jonny Favorite', 'Christmas', 'Mary, mary Christmas!', 0, 2),
-       ('3rd Article', 'Вася', 'Крещение', 'Ой мороз, мороз. Не морозь меня.', 0, 3);
+INSERT INTO post (title, anons, full_text, views, user_id)
+VALUES ('1st Article', 'New Year', 'Happy New Year!', 0, 1),
+       ('2nd Article', 'Christmas', 'Mary, mary Christmas!', 0, 2),
+       ('3rd Article', 'Крещение', 'Ой мороз, мороз. Не морозь меня.', 0, 3);
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
 VALUES ('USER', 1),

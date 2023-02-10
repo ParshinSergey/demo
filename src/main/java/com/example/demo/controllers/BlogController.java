@@ -4,7 +4,6 @@ import com.example.demo.AuthUser;
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.UserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +15,9 @@ import java.util.Optional;
 public class BlogController {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
-    public BlogController(PostRepository postRepository, UserRepository userRepository) {
+    public BlogController(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/blog")
@@ -40,7 +37,6 @@ public class BlogController {
     public String blogPostAdd(@RequestParam String title,
                               @RequestParam String anons,
                               @RequestParam String full_text,
-                              //@RequestParam String author,
                               @AuthenticationPrincipal AuthUser authUser) {
         User user = authUser.getUser();
         Post post = new Post(title, anons, full_text, user.getName());
@@ -78,7 +74,6 @@ public class BlogController {
                              @RequestParam String title,
                              @RequestParam String anons,
                              @RequestParam String full_text,
-                             //@RequestParam String author,
                              @RequestParam int views,
                              @AuthenticationPrincipal AuthUser authUser) {
 
