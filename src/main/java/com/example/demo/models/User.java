@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +33,11 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    //@OneToMany(orphanRemoval=false)
+    //@JoinColumn(name = "user_id")
+    @OneToMany(cascade=ALL, mappedBy="user")
+    private List<Post> posts;
+
     public User() {
     }
 
@@ -38,6 +47,14 @@ public class User {
         this.name = name;
         this.password = password;
         this.roles = roles;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Set<Role> getRoles() {

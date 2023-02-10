@@ -1,7 +1,11 @@
 package com.example.demo.controllers;
 
+import com.example.demo.AuthUser;
 import com.example.demo.models.Post;
+import com.example.demo.models.User;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +16,11 @@ import java.util.Optional;
 public class BlogController {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public BlogController(PostRepository postRepository) {
+    public BlogController(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/blog")
@@ -29,12 +35,16 @@ public class BlogController {
         return "blog-add";
     }
 
+
     @PostMapping("/blog/add")
     public String blogPostAdd(@RequestParam String title,
                               @RequestParam String anons,
                               @RequestParam String full_text,
-                              @RequestParam String author) {
-        Post post = new Post(title, anons, full_text, author);
+                              //@RequestParam String author,
+                              @AuthenticationPrincipal AuthUser authUser) {
+        User user = authUser.getUser();
+        Post post = new Post(title, anons, full_text, user.getName());
+        post.setUser(user);
         postRepository.save(post);
         return "redirect:/blog";
     }
@@ -68,10 +78,13 @@ public class BlogController {
                              @RequestParam String title,
                              @RequestParam String anons,
                              @RequestParam String full_text,
-                             @RequestParam String author,
-                             @RequestParam int views) {
+                             //@RequestParam String author,
+                             @RequestParam int views,
+                             @AuthenticationPrincipal AuthUser authUser) {
 
-        Post post = new Post(title, anons, full_text, author);
+        User user = authUser.getUser();
+        Post post = new Post(title, anons, full_text, user.getName());
+        post.setUser(user);
         post.setId(id);
         post.setViews(views);
         postRepository.save(post);

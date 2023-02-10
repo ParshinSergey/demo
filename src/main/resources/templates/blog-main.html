@@ -13,7 +13,7 @@
     <h1>Блог сайта</h1>
     <div th:each="el : ${posts}" class="alert alert-info mt-2">
         <h5 th:text="${el.title}"/>
-        <p th:text="'Author: '+ ${el.author}"/>
+        <p th:text="'Author: '+ ${el.getUser().getName()}"/>
         <p th:text="${el.anons}"/>
         <a th:href="'blog/' + ${el.id}" class="btn btn-warning">Детальнее</a>
     </div>

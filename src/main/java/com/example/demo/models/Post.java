@@ -1,6 +1,9 @@
 package com.example.demo.models;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +14,15 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //@ManyToOne(fetch = FetchType.LAZY)
+   /* @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    //@JoinColumn(name="userId",referencedColumnName="user_id", insertable=false, updatable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)*/
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     private String title, anons, full_text;
 
@@ -63,6 +75,14 @@ public class Post {
 
     public void setFull_text(String full_text) {
         this.full_text = full_text;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getViews() {
