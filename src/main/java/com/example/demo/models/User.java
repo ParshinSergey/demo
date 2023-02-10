@@ -1,7 +1,6 @@
 package com.example.demo.models;
 
 import com.example.demo.util.PasswordDeserializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.CascadeType.DETACH;
 
 @Entity
 @Table(name = "users")
@@ -23,7 +21,6 @@ public class User {
 
     private String name;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonDeserialize(using = PasswordDeserializer.class)
     private String password;
 
@@ -33,8 +30,6 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    //@OneToMany(orphanRemoval=false)
-    //@JoinColumn(name = "user_id")
     @OneToMany(cascade=ALL, mappedBy="user")
     private List<Post> posts;
 

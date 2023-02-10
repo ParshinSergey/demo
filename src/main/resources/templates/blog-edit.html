@@ -17,7 +17,6 @@
             <input type="text" th:value="${post.anons}" name="anons" placeholder="Введите анонс статьи" class="form-control"><br>
             <textarea name="full_text" placeholder="Введите полный текст статьи" class="form-control" th:text="${post.full_text}"/><br>
             <input type="hidden" th:value="${post.views}" name="views" class="form-control">
-            <!--<input type="hidden" th:value="${post.author}" name="author" class="form-control">-->
             <button type="submit" class="btn btn-success">Обновить</button>
         </form>
     </div>
