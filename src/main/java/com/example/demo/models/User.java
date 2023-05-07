@@ -1,9 +1,11 @@
 package com.example.demo.models;
 
 import com.example.demo.util.PasswordDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "email", nullable = false, unique = true)
+    @Email
     private String email;
 
     private String name;
@@ -34,6 +38,7 @@ public class User {
     //@OneToMany(orphanRemoval=false)
     //@JoinColumn(name = "user_id")
     @OneToMany(cascade=ALL, mappedBy="user")
+    @JsonIgnore
     private List<Post> posts;
 
     public User() {

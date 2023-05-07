@@ -5,12 +5,13 @@ import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+//import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
+//@EnableOAuth2Sso
 public class WebSecurityConfig {
 
     public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(12);
@@ -60,4 +62,10 @@ public class WebSecurityConfig {
         auth.userDetailsService(userDetailsService()).passwordEncoder(PASSWORD_ENCODER);
     }
 
+    /* From tutorial letscode
+    @Bean
+    public PrincipalExtractor principalExtractor (UserRepository userRepository){
+        return map -> {return new User();};
+    }
+*/
 }

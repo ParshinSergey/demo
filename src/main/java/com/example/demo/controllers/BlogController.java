@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Controller
@@ -70,19 +71,26 @@ public class BlogController {
     }
 
     @PostMapping("/blog/{id}/edit")
+    @Transactional
     public String postUpdate(@PathVariable(value = "id") long id,
                              @RequestParam String title,
                              @RequestParam String anons,
                              @RequestParam String full_text,
-                             @RequestParam int views,
+                             //@RequestParam int views,
                              @AuthenticationPrincipal AuthUser authUser) {
 
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("нет такого Id у Поста"));
+
         User user = authUser.getUser();
-        Post post = new Post(title, anons, full_text, user.getName());
-        post.setUser(user);
-        post.setId(id);
-        post.setViews(views);
+        if (user.getId() != post.getUser().getId()) {
+            throw new RuntimeException("Нет прав!");
+
+        }
+        post.setTitle(title);
+        post.setAnons(anons);
+        post.setFull_text(full_text);
         postRepository.save(post);
+
         return "redirect:/blog";
     }
 
